@@ -153,15 +153,15 @@ function ViceGuide({ onClose }: ViceGuideProps) {
 
           {activeTab === 'assemble' && (
             <div className="space-y-4">
-              <h3 className="c64-text-yellow text-sm">🔧 64TASS (Consigliato)</h3>
+              <h3 className="c64-text-yellow text-sm">🔧 64TASS (CONSIGLIATO)</h3>
               <div className="assembly-code text-[10px]">
                 <span className="asm-comment"># Installa 64tass</span><br/>
                 <span className="c64-text-green">Windows:</span> tass64.sourceforge.io<br/>
                 <span className="c64-text-green">Linux:</span> sudo apt install 64tass<br/>
                 <span className="c64-text-green">macOS:</span> brew install 64tass<br/>
                 <br/>
-                <span className="asm-comment"># Assembla</span><br/>
-                <span className="c64-text-green">64tass -o casino.prg casino.asm</span>
+                <span className="asm-comment"># Assembla (USA QUESTO FILE!)</span><br/>
+                <span className="c64-text-green">64tass -o casino.prg casino_64tass.asm</span>
               </div>
 
               <h3 className="c64-text-yellow text-sm">🔨 ACME</h3>
@@ -170,18 +170,18 @@ function ViceGuide({ onClose }: ViceGuideProps) {
                 <span className="c64-text-green">Linux:</span> sudo apt install acme<br/>
                 <span className="c64-text-green">macOS:</span> brew install acme<br/>
                 <br/>
-                <span className="asm-comment"># Assembla</span><br/>
-                <span className="c64-text-green">acme casino.asm</span>
+                <span className="asm-comment"># Assembla (USA QUESTO FILE!)</span><br/>
+                <span className="c64-text-green">acme casino_64tass.asm</span>
               </div>
 
-              <h3 className="c64-text-yellow text-sm">⚡ CC65</h3>
+              <h3 className="c64-text-yellow text-sm">⚡ CA65 (CC65)</h3>
               <div className="assembly-code text-[10px]">
                 <span className="asm-comment"># Installa CC65</span><br/>
                 <span className="c64-text-green">Sito:</span> cc65.github.io<br/>
                 <br/>
-                <span className="asm-comment"># Assembla</span><br/>
-                <span className="c64-text-green">ca65 casino.asm -o casino.o</span><br/>
-                <span className="c64-text-green">ld65 -t c64 -o casino.prg casino.o</span>
+                <span className="asm-comment"># Assembla (USA QUESTO FILE!)</span><br/>
+                <span className="c64-text-green">ca65 casino_ca65.asm -o casino.o</span><br/>
+                <span className="c64-text-green">ld65 -t c64 -o casino.prg casino.o c64.lib</span>
               </div>
 
               <h3 className="c64-text-yellow text-sm">📝 STRUTTURA FILE</h3>
@@ -209,31 +209,38 @@ function ViceGuide({ onClose }: ViceGuideProps) {
 
         {/* Footer */}
         <div className="p-4 border-t-2 border-purple-500 text-center">
-          <div className="flex justify-center space-x-4">
+          <div className="flex justify-center space-x-2 flex-wrap">
             <a
-              href="/c64/casino.asm"
+              href="/c64/casino_64tass.asm"
               download
               className="c64-btn text-xs"
             >
-              📥 SCARICA .ASM
+              📥 64TASS .ASM
+            </a>
+            <a
+              href="/c64/casino_ca65.asm"
+              download
+              className="c64-btn text-xs"
+            >
+              📥 CA65 .ASM
             </a>
             <a
               href="/c64/casino_loader.bas"
               download
               className="c64-btn text-xs"
             >
-              📥 SCARICA .BAS
+              📥 LOADER .BAS
             </a>
             <a
-              href="/c64/README.md"
+              href="/c64/COMPILAZIONE.md"
               download
               className="c64-btn text-xs"
             >
-              📥 SCARICA README
+              📥 GUIDA COMPILAZIONE
             </a>
           </div>
           <p className="c64-text text-[10px] mt-2">
-            ⚡ Tutti i file sono pronti per essere usati su VICE o C64 reale ⚡
+            ⚡ Usa casino_64tass.asm con 64tass/ACME, casino_ca65.asm con CA65 ⚡
           </p>
         </div>
       </div>
