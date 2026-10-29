@@ -1,1 +1,213 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 @import "tailwindcss";
+
+:root {
+  --c64-blue: #40318d;
+  --c64-light-blue: #7869c6;
+  --c64-border: #7869c6;
+  --c64-bg: #40318d;
+  --c64-text: #7869c6;
+  --c64-white: #ffffff;
+  --c64-red: #68372b;
+  --c64-cyan: #69a8c6;
+  --c64-green: #43a043;
+  --c64-yellow: #b9c83a;
+  --c64-orange: #c07020;
+  --c64-brown: #6c5eb5;
+  --c64-pink: #cb5d8a;
+  --c64-gray: #9f9f9f;
+  --c64-dark-gray: #6d6d6d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #1a1a2e;
+  font-family: 'Press Start 2P', monospace;
+  overflow-x: hidden;
+}
+
+.c64-screen {
+  background-color: var(--c64-bg);
+  color: var(--c64-light-blue);
+  font-family: 'Press Start 2P', monospace;
+  min-height: 100vh;
+  border: 16px solid var(--c64-border);
+  position: relative;
+  image-rendering: pixelated;
+}
+
+.c64-border-top {
+  background-color: var(--c64-border);
+  padding: 8px;
+  text-align: center;
+  color: var(--c64-bg);
+  font-size: 10px;
+}
+
+.c64-text {
+  color: var(--c64-light-blue);
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+}
+
+.c64-text-white {
+  color: var(--c64-white);
+}
+
+.c64-text-yellow {
+  color: var(--c64-yellow);
+}
+
+.c64-text-green {
+  color: var(--c64-green);
+}
+
+.c64-text-red {
+  color: var(--c64-red);
+}
+
+.c64-text-cyan {
+  color: var(--c64-cyan);
+}
+
+.c64-btn {
+  background-color: var(--c64-bg);
+  color: var(--c64-light-blue);
+  border: 2px solid var(--c64-light-blue);
+  padding: 8px 16px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.1s;
+  text-transform: uppercase;
+}
+
+.c64-btn:hover {
+  background-color: var(--c64-light-blue);
+  color: var(--c64-bg);
+}
+
+.c64-btn:active {
+  transform: scale(0.95);
+}
+
+.c64-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.card {
+  width: 70px;
+  height: 100px;
+  background: #ffffff;
+  border: 3px solid #333;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Press Start 2P', monospace;
+  position: relative;
+  transition: transform 0.3s ease;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-red {
+  color: #cc0000;
+}
+
+.card-black {
+  color: #000000;
+}
+
+.card-back {
+  background: linear-gradient(135deg, #40318d 25%, #7869c6 25%, #7869c6 50%, #40318d 50%, #40318d 75%, #7869c6 75%);
+  background-size: 14px 14px;
+  border-color: #7869c6;
+}
+
+.card-held {
+  border-color: #b9c83a;
+  box-shadow: 0 0 10px #b9c83a;
+}
+
+.scanlines {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.1) 0px,
+    rgba(0, 0, 0, 0.1) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+.crt-effect {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9998;
+  background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.3) 100%);
+}
+
+.blink {
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+@keyframes dealCard {
+  0% { transform: translateY(-200px) rotateY(180deg); opacity: 0; }
+  100% { transform: translateY(0) rotateY(0deg); opacity: 1; }
+}
+
+.deal-animation {
+  animation: dealCard 0.4s ease-out forwards;
+}
+
+@keyframes winFlash {
+  0%, 100% { background-color: var(--c64-bg); }
+  50% { background-color: #5a4abf; }
+}
+
+.win-flash {
+  animation: winFlash 0.3s ease 3;
+}
+
+.assembly-code {
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  color: #7869c6;
+  background: #1a1040;
+  padding: 12px;
+  border: 1px solid #40318d;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.asm-comment { color: #6d6d6d; }
+.asm-label { color: #b9c83a; }
+.asm-instruction { color: #69a8c6; }
+.asm-register { color: #cb5d8a; }
+.asm-number { color: #c07020; }
