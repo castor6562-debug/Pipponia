@@ -1,12 +1,13 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Card from './components/Card';
 import AssemblyViewer from './components/AssemblyViewer';
+import ViceGuide from './components/ViceGuide';
 import type { Card as CardType, GameSettings, GameMode, Difficulty, HandResult } from './game/types';
 import { createDeck, dealCards } from './game/deck';
 import { evaluatePokerHand, calculateBlackjackValue, isBlackjack } from './game/evaluator';
 import { playDealSound, playWinSound, playLoseSound, playChipSound, playMenuSound, playBlackjackSound } from './game/sound';
 
-type Screen = 'menu' | 'settings' | 'betting' | 'poker' | 'blackjack' | 'assembly';
+type Screen = 'menu' | 'settings' | 'betting' | 'poker' | 'blackjack' | 'assembly' | 'vice';
 type PokerSubPhase = 'bet' | 'hold' | 'result';
 type BjSubPhase = 'bet' | 'play' | 'dealer' | 'result';
 
@@ -263,6 +264,7 @@ function App() {
         <button className="c64-btn text-sm py-3" onClick={() => startNewGame('blackjack')}>2 - BLACKJACK</button>
         <button className="c64-btn text-sm py-3" onClick={() => { setScreen('settings'); playMenuSound(); }}>3 - IMPOSTAZIONI</button>
         <button className="c64-btn text-sm py-3" onClick={() => { setScreen('assembly'); playMenuSound(); }}>4 - CODICE 6502</button>
+        <button className="c64-btn text-sm py-3" onClick={() => { setScreen('vice'); playMenuSound(); }}>5 - GUIDA VICE / C64</button>
       </div>
       <div className="mt-8 text-center c64-text text-[10px]">
         <p>READY.</p>
@@ -473,6 +475,7 @@ function App() {
         {screen === 'poker' && renderPokerGame()}
         {screen === 'blackjack' && renderBlackjackGame()}
         {screen === 'assembly' && <AssemblyViewer gameMode={settings.gameMode} onClose={() => setScreen('menu')} />}
+        {screen === 'vice' && <ViceGuide onClose={() => setScreen('menu')} />}
       </div>
       <div className="fixed bottom-0 left-0 right-0 bg-purple-900 bg-opacity-80 p-2 text-center">
         <span className="c64-text text-[8px]">
