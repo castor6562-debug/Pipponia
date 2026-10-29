@@ -8,7 +8,6 @@ export interface Card {
 }
 
 export type GameMode = 'poker' | 'blackjack';
-export type GamePhase = 'menu' | 'settings' | 'betting' | 'playing' | 'dealerTurn' | 'result' | 'assembly';
 export type Difficulty = 'easy' | 'medium' | 'hard';
 
 export interface GameSettings {
@@ -23,18 +22,6 @@ export interface HandResult {
   name: string;
   multiplier: number;
 }
-
-export const HAND_RANKINGS: Record<string, number> = {
-  'Royal Flush': 250,
-  'Straight Flush': 50,
-  'Four of a Kind': 25,
-  'Full House': 9,
-  'Flush': 6,
-  'Straight': 4,
-  'Three of a Kind': 3,
-  'Two Pair': 2,
-  'Jacks or Better': 1,
-};
 
 export const SUIT_SYMBOLS: Record<Suit, string> = {
   hearts: '♥',

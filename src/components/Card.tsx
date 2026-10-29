@@ -1,5 +1,5 @@
-import React from 'react';
-import { Card as CardType, SUIT_SYMBOLS, SUIT_COLORS } from '../game/types';
+import { SUIT_SYMBOLS, SUIT_COLORS } from '../game/types';
+import type { Card as CardType } from '../game/types';
 
 interface CardProps {
   card: CardType;
@@ -8,10 +8,10 @@ interface CardProps {
   index?: number;
 }
 
-const Card: React.FC<CardProps> = ({ card, faceDown = false, onClick, index = 0 }) => {
+function Card({ card, faceDown = false, onClick, index = 0 }: CardProps) {
   if (faceDown) {
     return (
-      <div 
+      <div
         className="card card-back deal-animation"
         style={{ animationDelay: `${index * 0.1}s` }}
       >
@@ -42,6 +42,6 @@ const Card: React.FC<CardProps> = ({ card, faceDown = false, onClick, index = 0 
       )}
     </div>
   );
-};
+}
 
 export default Card;

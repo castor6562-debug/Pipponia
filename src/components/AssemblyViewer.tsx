@@ -1,39 +1,35 @@
-import React from 'react';
 import { ASSEMBLY_POKER, ASSEMBLY_BLACKJACK_EXTRA } from '../game/assembly';
-import { GameMode } from '../game/types';
+import type { GameMode } from '../game/types';
+import type { ReactNode } from 'react';
 
 interface AssemblyViewerProps {
   gameMode: GameMode;
   onClose: () => void;
 }
 
-const AssemblyViewer: React.FC<AssemblyViewerProps> = ({ gameMode, onClose }) => {
-  const code = gameMode === 'poker' 
-    ? ASSEMBLY_POKER 
+function AssemblyViewer({ gameMode, onClose }: AssemblyViewerProps) {
+  const code = gameMode === 'poker'
+    ? ASSEMBLY_POKER
     : ASSEMBLY_POKER + '\n\n' + ASSEMBLY_BLACKJACK_EXTRA;
 
-  const highlightAssembly = (line: string): React.ReactNode => {
-    // Comments
+  const highlightAssembly = (line: string): ReactNode => {
     if (line.trim().startsWith(';')) {
       return <span className="asm-comment">{line}</span>;
     }
-    
-    // Labels
     if (line.match(/^[A-Z_@]+:/)) {
       return <span className="asm-label">{line}</span>;
     }
-    
-    // Instructions
     const parts = line.split(/\s+/);
     if (parts.length > 0) {
       const instruction = parts[0];
-      const instructions = ['LDA', 'LDX', 'LDY', 'STA', 'STX', 'STY', 'ADC', 'SBC', 
+      const instructions = [
+        'LDA', 'LDX', 'LDY', 'STA', 'STX', 'STY', 'ADC', 'SBC',
         'AND', 'ORA', 'EOR', 'ASL', 'LSR', 'ROL', 'ROR', 'CMP', 'CPX', 'CPY',
         'BEQ', 'BNE', 'BCS', 'BCC', 'BMI', 'BPL', 'BVS', 'BVC', 'JMP', 'JSR',
         'RTS', 'RTI', 'PHA', 'PLA', 'PHP', 'PLP', 'NOP', 'SEC', 'CLC', 'SED',
         'CLD', 'SEI', 'CLI', 'TAX', 'TXA', 'TAY', 'TYA', 'TSX', 'TXS', 'INX',
-        'INY', 'DEX', 'DEY', 'INC', 'DEC', '.byte', '.word', '*='];
-      
+        'INY', 'DEX', 'DEY', 'INC', 'DEC', '.byte', '.word', '*='
+      ];
       if (instructions.includes(instruction)) {
         return (
           <span>
@@ -43,7 +39,6 @@ const AssemblyViewer: React.FC<AssemblyViewerProps> = ({ gameMode, onClose }) =>
         );
       }
     }
-    
     return <span>{line}</span>;
   };
 
@@ -58,7 +53,6 @@ const AssemblyViewer: React.FC<AssemblyViewerProps> = ({ gameMode, onClose }) =>
             CHIUDI [ESC]
           </button>
         </div>
-        
         <div className="assembly-code flex-1 overflow-auto rounded border-2 border-purple-700">
           {code.split('\n').map((line, i) => (
             <div key={i} className="flex">
@@ -69,13 +63,12 @@ const AssemblyViewer: React.FC<AssemblyViewerProps> = ({ gameMode, onClose }) =>
             </div>
           ))}
         </div>
-        
         <div className="mt-4 text-xs c64-text text-center">
           ⚡ Codice ottimizzato per MOS 6510 - 64KB RAM - SID 6581 ⚡
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default AssemblyViewer;

@@ -25,8 +25,8 @@ export function evaluatePokerHand(cards: Card[]): HandResult {
   if (countValues[0] === 2 && countValues[1] === 2) return { name: 'Two Pair', multiplier: 2 };
   if (countValues[0] === 2) {
     // Jacks or Better
-    const pairRank = Object.entries(counts).find(([_, count]) => count === 2)?.[0];
-    if (pairRank && getRankIndex(pairRank as Rank) >= 9) { // J=9, Q=10, K=11, A=12
+    const pairEntry = Object.entries(counts).find((entry) => entry[1] === 2);
+    if (pairEntry && getRankIndex(pairEntry[0] as Rank) >= 9) { // J=9, Q=10, K=11, A=12
       return { name: 'Jacks or Better', multiplier: 1 };
     }
   }
@@ -35,7 +35,6 @@ export function evaluatePokerHand(cards: Card[]): HandResult {
 }
 
 function checkStraight(ranks: number[]): boolean {
-  // Check normal straight
   for (let i = 1; i < ranks.length; i++) {
     if (ranks[i] !== ranks[i - 1] + 1) {
       // Check for A-2-3-4-5 (wheel)
@@ -65,7 +64,7 @@ export function calculateBlackjackValue(cards: Card[]): number {
     if (card.rank === 'A') {
       aces++;
       value += 11;
-    } else if (['K', 'Q', 'J'].includes(card.rank)) {
+    } else if (card.rank === 'K' || card.rank === 'Q' || card.rank === 'J') {
       value += 10;
     } else {
       value += parseInt(card.rank);
@@ -82,39 +81,4 @@ export function calculateBlackjackValue(cards: Card[]): number {
 
 export function isBlackjack(cards: Card[]): boolean {
   return cards.length === 2 && calculateBlackjackValue(cards) === 21;
-}
-
-// Computer decision for video poker (difficulty-based)
-export function computerHoldDecision(cards: Card[], difficulty: string): boolean[] {
-  const hand = evaluatePokerHand(cards);
-  
-  if (difficulty === 'easy') {
-    // Easy: holds suboptimally sometimes
-    return cards.map(() => Math.random() > 0.4);
-  }
-  
-  if (difficulty === 'medium') {
-    // Medium: holds correctly most of the time
-    return optimalHold(cards);
-  }
-  
-  // Hard: always optimal
-  return optimalHold(cards);
-}
-
-function optimalHold(cards: Card[]): boolean[] {
-  const hand = evaluatePokerHand(cards);
-  
-  // Always keep winning hands
-  if (hand.multiplier >= 3) {
-    return cards.map(() => true);
-  }
-  
-  // Keep pairs
-  const counts: Record<string, number> = {};
-  for (const card of cards) {
-    counts[card.rank] = (counts[card.rank] || 0) + 1;
-  }
-  
-  return cards.map(card => counts[card.rank] >= 2);
 }

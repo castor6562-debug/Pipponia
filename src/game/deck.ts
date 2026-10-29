@@ -30,7 +30,7 @@ export function dealCards(deck: Card[], count: number): { cards: Card[]; remaini
 
 export function getCardValue(rank: Rank): number {
   if (rank === 'A') return 11;
-  if (['K', 'Q', 'J'].includes(rank)) return 10;
+  if (rank === 'K' || rank === 'Q' || rank === 'J') return 10;
   return parseInt(rank);
 }
 
